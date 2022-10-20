@@ -309,14 +309,27 @@ How would we model our *net gain* or winnings from 10 spins (we bet \$1 on each 
 
 <details><summary>Check your answer</summary>
 Use the same box as above, with 18 tickets marked $\fbox{+1}$ and 20 marked $\fbox{-1}$, draw 10 times with replacement, and sum the draws.  
+</details>
 
 #### Example 4: Donkeys in Kenya
-Recall the case study we saw about donkeys in Kenya. The question in the study was how to predict the weight of donkeys using measurements that were easier to obtain[^donkey].
+![](images/kenyan-donkey.jpeg){fig-align=center width="200"}[^donkey-pic]
+
+Recall the case study we saw about donkeys in Kenya. The question in the study was how to predict the weight of donkeys using measurements that were easier to obtain, and they obtained the data by measuring donkeys at 17 sites in 2010[^donkey].
+
+Four body measurements were made for each donkey: liveweight (kg), heart girth (cm), height (cm), and length (cm), and in addition, sex and body condition score were recorded (the bcs categorized the donkeys according to their condition, ranging from "emaciated" to "obese"). Suppose I want to sample 50 donkeys from this dataset, to compute their average weight and average girth (girth or heart girth  is the circumference of the body, measured just behind the front legs.)
+
+Set up the box model for this process (sampling donkeys).
+
+<details><summary>Check your answer</summary>
+
+
 
 
 [^donkey]: K. Milner and J.C. Rougier, 2014. *How to weigh a donkey in the
 Kenyan countryside*. Significance, 11(4), 40–43. 74, 115
 <https://rss.onlinelibrary.wiley.com/doi/full/10.1111/j.1740-9713.2014.00768.x>
+
+[^donkey-pic]: <https://people.maths.bris.ac.uk/~mazjcr/#donkeys>
 
 #### Example 5: Penguins
 ![](images/penguins.png){fig-align=center width="300"}
