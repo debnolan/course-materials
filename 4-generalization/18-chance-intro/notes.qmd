@@ -132,7 +132,7 @@ This makes sense because the tickets are equally likely to be drawn, so their di
 
 Since the tickets are drawn according to their chance, we could compute what a draw would be, on average, by computing a weighted (by their chance) average of the possible values. We would get, for a single draw: $1\times \frac{1}{5} + 2 \times \frac{2}{5} + 3 \times \frac{1}{5} + 4 \times \frac{1}{5} = 2.4$. Note that this happens to be the average of the tickets in the box.
 
-How about if we draw 30 times with replacement from this box and see what our sample looks like (we will explore the code later in the notes). That is, we will see what proportion of the draws are 1's, 2's etc.
+How about if we draw 30 times at random with replacement from this box and see what our sample looks like (we will explore the code later in the notes). That is, we will see what proportion of the draws are 1's, 2's etc.
 
 ```{r}
 #| fig.width: 3
@@ -166,39 +166,15 @@ We can see that the *sample proportions* look similar to the *population (box) p
 
 What we have seen here is how when we draw at random, we get a sample that resembles the population, that is, a *representative sample*.
 
-MUST MOVE THIS PORTION >>>>>>>>>>>
-Let's repeat this process, but draw 1000 times instead, and do the same thing (count the number of each ticket, and compute the proportions).
+**With or without replacement?**
 
-```{r}
-#| fig.width: 3
-#| fig.height: 3
-#| fig.align: center
+When we draw at random *with* replacement, we draw one ticket, and put it back before drawing another ticket. For the box in this section, if we draw twice, both times we will draw from the following box:
 
-set.seed(12345)
-sample_size =1000
-sample_box2 = sample(box, size = sample_size, replace = TRUE)
-data.frame(sample_box2) %>%
-  ggplot(aes(sample_box2)) + 
-  geom_bar(aes(y = ..prop..), width = 0.98, fill = "grey55") +
-  xlab("values of draws") + 
-  ylab("proportion of draws")
-```
+![](images/box.jpeg){fig-align=center width="200"}
 
-Now the sample proportions look almost identical to the population (box) proportions:
+If we draw twice at random *without* replacement, then our second draw is from a *different* box, illustrated below:
 
-<center>
-<div style="width:300px">
-
-|    Ticket | Number of times drawn | Proportion of times drawn |
-|:---------:|:---------------------:|:---------------------:|
-| $\fbox{1}$| `r table(sample_box2)[[1]]` | `r table(sample_box2)[[1]]/sample_size` |
-| $\fbox{2}$| `r table(sample_box2)[[2]]` |`r table(sample_box2)[[2]]/sample_size` |
-| $\fbox{3}$| `r table(sample_box2)[[3]]` | `r table(sample_box2)[[3]]/sample_size` |
-| $\fbox{4}$|  `r table(sample_box2)[[4]]` | `r table(sample_box2)[[4]]/sample_size` |
-
-</div>
-</center>
->>>>>>>>>>>>
+![](images/no-replace-box.jpeg){fig-align=center width="300"}
 
 \
 
@@ -250,7 +226,7 @@ We could use the same box as above:
 
 ![](images/coin.jpeg){width="100"}
 
-Remember that the ticket $\fbox{1}$ represents the outcome of a toss landing heads and  $\fbox{0}$ represents a toss landing tails (because we are counting the number of heads). We let the box be as above, and draw two tickets *with replacement* from this box. To count the number of heads in two tosses, we add the draws.
+Remember that the ticket $\fbox{1}$ represents the outcome of a toss landing heads and  $\fbox{0}$ represents a toss landing tails (because we are counting the number of heads). We let the box be as above, and draw two tickets at random *with replacement* from this box. To count the number of heads in two tosses, we add the draws.
 </details>
 
 **Tossing an unfair coin**
@@ -281,7 +257,7 @@ The box will have six tickets as shown below, and we would draw one ticket from 
 **Rolling a fair die twice**
 
 <details><summary>Check your answer</summary>
-We would use the same box as in the previous example, draw *twice* with replacement from this box, then add the draws.
+We would use the same box as in the previous example, draw *twice* at random with replacement from this box, then add the draws.
 
 ![](images/two-dice.jpeg){width="450"}
 
@@ -308,7 +284,7 @@ We would use the box shown below marked "Gain". In the top box, there are 38 tic
 How would we model our *net gain* or winnings from 10 spins (we bet \$1 on each spin, and either lose it or get it back plus \$1)?
 
 <details><summary>Check your answer</summary>
-Use the same box as above, with 18 tickets marked $\fbox{+1}$ and 20 marked $\fbox{-1}$, draw 10 times with replacement, and sum the draws.  
+Use the same box as above, with 18 tickets marked $\fbox{+1}$ and 20 marked $\fbox{-1}$, draw 10 times at random with replacement, and sum the draws.  
 </details>
 
 #### Example 4: Donkeys in Kenya
@@ -322,8 +298,13 @@ Set up the box model for this process (sampling donkeys).
 
 <details><summary>Check your answer</summary>
 
+The box has 544 tickets, one for each donkey. The ticket has information from all 8 variables recorded (3 categorical and 5 numerical). We only need 2 variables, so the tickets will have those two variables recorded.
+We draw 50 tickets from this box at random *without* replacement, and compute 2 averages from the draws.
+
+![](images/donkey-tkt.jpeg){fig-align=center width="300"}
 
 
+</details>
 
 [^donkey]: K. Milner and J.C. Rougier, 2014. *How to weigh a donkey in the
 Kenyan countryside*. Significance, 11(4), 40–43. 74, 115
@@ -331,13 +312,17 @@ Kenyan countryside*. Significance, 11(4), 40–43. 74, 115
 
 [^donkey-pic]: <https://people.maths.bris.ac.uk/~mazjcr/#donkeys>
 
-#### Example 5: Penguins
+#### Example 5: Antarctic penguins
+
 ![](images/penguins.png){fig-align=center width="300"}
 
-Suppose we want to 
-You have seen the penguins data, which measured `r ncol(penguins)` variables on a sample of `r nrow(penguins)`. Here the box will contain 344 tickets, and we will draw 50 tickets *without* replacement. Note that each ticket in the box represents one penguin in the sample has information for multiple variables measured on that penguin, and we would consider only the information we are interested in.
+You have seen the penguins data, which measured `r ncol(penguins)` variables on a sample of `r nrow(penguins)`. Here the box will contain 344 tickets, and we will draw 50 tickets at random without replacement. Note that each ticket in the box represents one penguin in the sample has information for multiple variables measured on that penguin, and we would consider only the information we are interested in. Suppose we wanted sex, species, and flipper length, to compare the flipper lengths of males and females, grouped by species.
 
-![](images/penguin-ticket.jpeg){fig-align=center width="150"}
+<details><summary>Check your answer</summary>
+
+The box would have 344 tickets, one for each penguin. Each ticket would have 3 things written on it: the species, sex, and flipper length in mm of the penguin.
+We would draw 50 tickets at random without replacement, and 
+![](images/penguin-ticket.jpeg){fig-align=center width="2000"}
 
 ## Simulating the box model
 
@@ -489,22 +474,6 @@ This implies that the chance of *either* $A$ *or* $B$ happening is $1/6 + 3/6 = 
 
 Note that *both* events cannot happen - using a six-sided die, you cannot roll a multiple of 5 that is also an even number. We say then that the event that both $A$ and $B$ happen is impossible, and impossible events have no chance of occurring. That is the chance of $A$ *and* $B$ is 0.
 
-### With or without replacement?
-
-When we draw with replacement, we draw one ticket, and put it back before drawing another ticket. In terms of the first box we looked at, if we draw twice, both times we will draw from the following box:
-
-![](images/box.jpeg){fig-align=center width="200"}
-
-If we draw twice *without* replacement, then our second draw is from a *different* box, illustrated below:
-
-![](images/no-replace-box.jpeg){fig-align=center width="300"}
-
-### Conditional probability
-
-In the second box above, notice that the chance of drawing a $\fbox{2}$ changed after the first draw. At first, the chance that a $\fbox{2}$ would be drawn is 2 in 5 or 0.4, but the chance increases in the second box to 0.5, which is called a *conditional chance*, since it depends on what happens in the first draw.
-
-#### more
-<more about conditional prob and box with  tickets with two parts.
 
  [^freq]: This is known as the *frequentist* theory of probability: the chance of something is the relative frequency with which it occurs in repeated trials (that are assumed to be independent).
 
